@@ -10,7 +10,9 @@
 void publish_point_cloud(ros::Publisher &pub_pointcloud, const std::vector<point> &pointVector, ros::Time time) {
 
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_msg (new pcl::PointCloud<pcl::PointXYZ>() );
-	cloud_msg->header.stamp = time;
+	//cloud_msg->header.stamp = time;
+ros::Time time_st = ros::Time::now ();
+cloud_msg->header.stamp = time_st.toNSec()/1e3;
 
 	cloud_msg->width = pointVector.size();
 	cloud_msg->height = 1;

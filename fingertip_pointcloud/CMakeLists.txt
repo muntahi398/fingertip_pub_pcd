@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   pcl_ros
   pcl_conversions
+  fingertip_msg
 )
 
 include_directories(
