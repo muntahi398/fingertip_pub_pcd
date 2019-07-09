@@ -1,0 +1,12 @@
+<package>
+<name>fingertip_msg</name>
+  <description >The fingertip_msg package  </description>
+<version> 0.0.0 </version>
+  <author>Alexis Maldonado</author>
+  <license>GPLv3+</license>
+<maintainer email ="mnkmuntahi@gmail.com"> karim </maintainer>
+  <url>http://toychest.in.tum.de/wiki/projects:fingertip</url>
+  <buildtool_depend>catkin</buildtool_depend>
+</package>
+
+
