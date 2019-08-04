@@ -23,7 +23,13 @@
 */
 
 #include <tf/transform_broadcaster.h>
+
 #include <math.h>
+#include "ros/ros.h"
+#include<string.h>    //strlen
+#include <ros/ros.h>
+
+
 
 #define CIRCLE_STEPS 1000
 #define PI 3.14159265
@@ -37,7 +43,7 @@ int main(int argc, char** argv){
 	
 	tf::TransformBroadcaster br;
 	tf::Transform transform;
-	transform.setRotation( tf::Quaternion(0, 0, 0) );
+	transform.setRotation( tf::createQuaternionFromRPY(0.0, 0.0, 0.0) );
     
     ros::Rate loop_rate(100);
     
