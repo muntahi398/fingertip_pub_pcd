@@ -75,7 +75,7 @@ with open("datafile3.csv", "w+") as new_file:
  #       for k in xrange(len(DATASPLIT)-1):
  #            print(float((DATASPLIT [k])), " ! ")
  
-        r.range = float(DATASPLIT [1])
+        r.range = float(DATASPLIT [1])/1000  ## convert to mm
 
         if ((DATASPLIT [0])=="s0"):
             pub_range0.publish(r)

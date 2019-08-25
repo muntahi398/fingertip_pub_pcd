@@ -8,11 +8,12 @@
     <xacro:include filename="$(find iai_fingertip_description)/urdf/fingertip_sensor_macro.urdf.xacro" />
 
 
-  <xacro:macro name="fingertip_board_xacro" params="prefix parent">
+  <xacro:macro name="fingertip_board_xacro" params="prefix parent base_xyz base_rpy">
 
     <!-- Joint connecting the parent to our frame_in -->
     <joint name="${prefix}adapter_base_joint" type="fixed">
-      <origin xyz="0 0 0.0" rpy="0 0 0" />
+      <!--<origin xyz="0 0 0.0" rpy="0 0 0" /> -->
+      <origin xyz="${base_xyz}" rpy="${base_rpy}" />      
       <parent link="${parent}"/>
       <child link="${prefix}adapter_fingertip_base_frame_in"/>
     </joint>
@@ -87,18 +88,32 @@
    <xacro:vl_sensor suffix="sensor" sens_no ="9" sensor_joint_xyz="0.038 0.065 -0.003" sensor_joint_rpy=" ${-pi/2.0} 0 0 "/>
 
 
-
   </xacro:macro>
 
-<link name="base_link">
+<link name="fingertip_base_link">
         <visual>
           <geometry>
                       <mesh filename="package://iai_fingertip_description/meshes/fingertip_m.stl" scale="0.001 0.001 0.001"/>
                       <!-- <cylinder length="0.6" radius="0.2"/>  -->
           </geometry>
         </visual>
-      </link>
+</link>
 
-<xacro:fingertip_board_xacro prefix="left" parent ="base_link" />
+    <joint name="base_to_finger" type="fixed">
+      <origin xyz="0 0.5 0" rpy="0 0 0" />
+      <parent link="pbase_link"/>
+      <child link="fingertip_base_link"/>
+    </joint>
 
+    <!-- Link for the finger sensor-->
+    <link name="pbase_link">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+
+        <material name="White"/>
+      </visual>
+    </link>
+
+<xacro:fingertip_board_xacro prefix="left" parent ="fingertip_base_link" base_xyz = "-0.5 0.5 0" base_rpy = "0 ${pi/2.0} 0"/>
+<xacro:fingertip_board_xacro prefix="right" parent ="fingertip_base_link" base_xyz = "0.5 0.5 0" base_rpy = "0 ${-pi/2.0} 0"/>
 </robot>

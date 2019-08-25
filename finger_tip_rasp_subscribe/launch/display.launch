@@ -10,7 +10,7 @@
     name="robot_description"
     textfile="$(find iai_fingertip_description)/urdf/fingertip.urdf.xacro" /> -->
 
-<param name="robot_description" command="$(find xacro)/xacro.py $(find iai_fingertip_description)/urdf/fingertip.urdf.xacro" /> 
+<param name="robot_description" command="$(find xacro)/xacro.py $(find iai_fingertip_description)/urdf/mod_fingertip.urdf.xacro" /> 
   <param
     name="use_gui"
     value="$(arg gui)" />
