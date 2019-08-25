@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="fingertip_board"> 
+
+
+
+    <xacro:include filename="$(find iai_fingertip_description)/urdf/fingertip_sensor_macro.urdf.xacro" />
+
+
+  <xacro:macro name="fingertip_board_xacro" params="prefix parent">
+
+    <!-- Joint connecting the parent to our frame_in -->
+    <joint name="${prefix}adapter_base_joint" type="fixed">
+      <origin xyz="0 0 0.0" rpy="0 0 0" />
+      <parent link="${parent}"/>
+      <child link="${prefix}adapter_fingertip_base_frame_in"/>
+    </joint>
+
+    <!-- link for the adapter plate -->
+    <link name="${prefix}adapter_fingertip_base_frame_in">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+                     <cylinder length="0.006" radius="0.002"/>
+<!--  <mesh filename="package://iai_fingertip_description/meshes/adapter_plate_fingertip_base_weiss.stl" scale="0.001 0.001 0.001"/>  -->
+        </geometry>
+        <material name="Grey"/>
+      </visual>
+    </link>
+
+
+    <!-- Empty link just to get the frame out -->
+    <link name="${prefix}adapter_fingertip_base_frame_out"/>
+
+
+    <!-- joint positioning the frame_out -->
+    <joint name="${prefix}adapter_fingertip_base_trans_frame_out" type="fixed">
+      <origin xyz="0 0 0.016" rpy="0 0 0" />
+      <parent link="${prefix}adapter_fingertip_base_frame_in" />
+      <child link="${prefix}adapter_fingertip_base_frame_out" />
+      <axis xyz="0 0 0" />
+    </joint>
+
+    <!-- Empty link just to get the normal of sensors -->
+    <link name="${prefix}_fingertip_normal"/>
+
+
+    <!-- joint positioning the frame_out -->
+    <joint name="${prefix}_fingertip_normal_joint" type="fixed">
+      <origin xyz="0 0 0.0" rpy="0 ${-pi/2.0} 0" />
+      <parent link="${prefix}adapter_fingertip_base_frame_in" />
+      <child link="${prefix}_fingertip_normal" />
+      <axis xyz="0 0 0" />
+    </joint>
+
+    <!-- Now joint connecting the actual fingertip pcb -->
+
+    <joint name="${prefix}_fingertip_base_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="${prefix}adapter_fingertip_base_frame_in"/>
+      <child link="${prefix}fingertip_frame_in"/>
+    </joint>
+
+    <!-- Link for the finger sensor-->
+    <link name="${prefix}fingertip_frame_in">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iai_fingertip_description/meshes/fingertip_m.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="White"/>
+      </visual>
+    </link>
+
+
+<!-- suffix sens_no sensor_joint_xyz sensor_joint_rpy -->
+   <xacro:vl_sensor suffix="sensor" sens_no ="0" sensor_joint_xyz="0.0028 0.0566 0" sensor_joint_rpy=" 0 0 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="1" sensor_joint_xyz="0.0382 0.0566 0" sensor_joint_rpy=" 0 0 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="2" sensor_joint_xyz="0.0028 0.0435 0" sensor_joint_rpy=" 0 0 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="3" sensor_joint_xyz="0.0382 0.0435 0" sensor_joint_rpy=" 0 0 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="4" sensor_joint_xyz="0.0028 0.0307 0" sensor_joint_rpy=" 0 0 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="5" sensor_joint_xyz="0.0382 0.0307 0" sensor_joint_rpy=" 0 0 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="6" sensor_joint_xyz="0.0028 0.0498 0" sensor_joint_rpy=" 0 3.1415 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="7" sensor_joint_xyz="0.0382 0.0498 0" sensor_joint_rpy=" 0 3.1415 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="8" sensor_joint_xyz="0.003 0.065 -0.003" sensor_joint_rpy=" ${-pi/2.0} 0 0 "/>
+   <xacro:vl_sensor suffix="sensor" sens_no ="9" sensor_joint_xyz="0.038 0.065 -0.003" sensor_joint_rpy=" ${-pi/2.0} 0 0 "/>
+
+
+
+  </xacro:macro>
+
+<link name="base_link">
+        <visual>
+          <geometry>
+                      <mesh filename="package://iai_fingertip_description/meshes/fingertip_m.stl" scale="0.001 0.001 0.001"/>
+                      <!-- <cylinder length="0.6" radius="0.2"/>  -->
+          </geometry>
+        </visual>
+      </link>
+
+<xacro:fingertip_board_xacro prefix="fingertip" parent ="base_link" />
+
+</robot>

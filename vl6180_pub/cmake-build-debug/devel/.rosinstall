@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/muntahi/catkin_ws/src/vl6180_pub/cmake-build-debug/devel/setup.sh

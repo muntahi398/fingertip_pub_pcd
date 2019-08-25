@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: vl6180_pub
+Description: Description of vl6180_pub
+Version: 0.0.0
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: 

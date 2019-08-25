@@ -1,0 +1,8 @@
+prefix=/home/muntahi/catkin_ws/src/vl6180_pub/cmake-build-debug/devel
+
+Name: vl6180_pub
+Description: Description of vl6180_pub
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/muntahi/catkin_ws/src/vl6180_pub/cmake-build-debug/devel/lib 
+Requires: 
