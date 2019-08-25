@@ -17,7 +17,7 @@ from sensor_msgs.msg import  Imu
 
 
 # Open com port
-serial_port = '/dev/ttyACM1'
+serial_port = '/dev/ttyUSB0'
 IMU_FRAME = '/imu'
 
 rospy.init_node('bno085_sensor')
