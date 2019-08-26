@@ -9,7 +9,9 @@ import math
 import time
 from sensor_msgs.msg import Range
 
-
+import tf.msg
+import geometry_msgs.msg
+import math
 
 
 import numpy as np
@@ -131,7 +133,35 @@ def fingertip_callback(msg):
     ellipse.color.b = 0.0
     ellipse.lifetime.secs =1.0
     marker_publ.publish(ellipse)
-    
+ 
+class DynamicTFBroadcaster:
+
+    def __init__(self):
+        self.pub_tf = rospy.Publisher("/tf", tf.msg.tfMessage)
+
+        change = 0.0
+        while not rospy.is_shutdown():
+            # Run this loop at about 10Hz
+            rospy.sleep(0.1)
+
+            t = geometry_msgs.msg.TransformStamped()
+            t.header.frame_id = "world" 
+            t.header.stamp = rospy.Time.now()
+            t.child_frame_id = "pbase_link"
+            t.transform.translation.x = 0.50 * math.sin(change)
+            t.transform.translation.y = 0.50 * math.cos(change)
+            t.transform.translation.z = 0.0
+
+            t.transform.rotation.x = 0.0
+            t.transform.rotation.y = 0.0
+            t.transform.rotation.z = 0.0
+            t.transform.rotation.w = 1.0
+
+            tfm = tf.msg.tfMessage([t])
+            self.pub_tf.publish(tfm)
+
+            change += 0.1
+            
 def array_facing_marker():    
     (trans_s0,rot) = listener.lookupTransform("f0_s0_meas", "base_link",  
                     rospy.Time(0))
@@ -297,10 +327,13 @@ def fingertip_sensor_callback(msg):
         
 def base_move(p_x,p_y):
     if(p_x<2):
-        br.setOrigin(tf.Vector3(2.0*sin(change), 2.0*cos(change), 0.0) )
-        br.setRotation( tf.Quaternion(change, 0, 0) );
+        global change
+#        transform.setOrigin(tf.Vector3(2.0*sin(change), 2.0*cos(change), 0.0) )
+#        transform.setRotation( tf.Quaternion(change, 0, 0) );
         change += 0.1;
-        br.sendTransform(transform, rospy.Time(0), "pbase_link", "base_link");
+#        br.sendTransform(transform, rospy.Time(0), "pbase_link", "world");
+        br.sendTransform(tf.Vector3(2.0*sin(change), 2.0*cos(change), 0.0),tf.transformations.quaternion_from_euler(0, 0, 0), rospy.Time(0), "pbase_link", "world");
+
 #        br.sendTransform((p_x, p_y, 0),
 #                      tf.transformations.quaternion_from_euler(0, 0, 0),
 #                      msg.header.stamp,
@@ -313,6 +346,7 @@ callback_finger_sens = lambda x: callback(x,dict_1,dict_2)
 rospy.init_node('range_sensor_subscribe')
 listener = tf.TransformListener()
 br = tf.TransformBroadcaster()
+#transform=tf.transformations()
 
 
 #plot surface
@@ -355,7 +389,8 @@ f1_s9_measurement  = rospy.Subscriber("/finger1/s9", Range, f1_s9_callback)
 
 #for p_x in range(0,2,.05):
 p_x=p_x+0.05
-base_move(p_x,p_y)
+#base_move(p_x,p_y)
+tfb = DynamicTFBroadcaster()
 if p_x>1:
     p_x=0
 
