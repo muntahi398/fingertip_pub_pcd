@@ -162,6 +162,27 @@ class DynamicTFBroadcaster:
 
             change += 0.1
             
+def circular_broadcaster():
+    rospy.sleep(0.1)
+
+    t = geometry_msgs.msg.TransformStamped()
+    t.header.frame_id = "world" 
+    t.header.stamp = rospy.Time.now()
+    t.child_frame_id = "pbase_link"
+    t.transform.translation.x = 0.40 * math.sin(change)
+    t.transform.translation.y = 0.40 * math.cos(change)
+    t.transform.translation.z = 0.0
+
+    t.transform.rotation.x = 0.0
+    t.transform.rotation.y = 0.0
+    t.transform.rotation.z = 0.0
+    t.transform.rotation.w = 1.0
+
+    tfm = tf.msg.tfMessage([t])
+    self.pub_tf.publish(tfm)
+
+    change += 0.1
+            
 def array_facing_marker():    
     (trans_s0,rot) = listener.lookupTransform("f0_s0_meas", "base_link",  
                     rospy.Time(0))
@@ -390,23 +411,24 @@ f1_s9_measurement  = rospy.Subscriber("/finger1/s9", Range, f1_s9_callback)
 #for p_x in range(0,2,.05):
 p_x=p_x+0.05
 #base_move(p_x,p_y)
-tfb = DynamicTFBroadcaster()
+#tfb = DynamicTFBroadcaster()
 if p_x>1:
     p_x=0
 
-marker_publ = rospy.Publisher("ellipse", Marker, queue_size=10)
-ellipse = Marker()
-ellipse.type = Marker.CYLINDER
-#ellipse.action = Marker.add
-ellipse.scale.x = 2
-ellipse.scale.y = 2
-ellipse.scale.z = 1
-ellipse.color.a = 1.0
-ellipse.color.r = 1.0
-ellipse.color.g = 1.0
-ellipse.color.b = 1.0
+#marker_publ = rospy.Publisher("ellipse", Marker, queue_size=10)
+#ellipse = Marker()
+#ellipse.type = Marker.CYLINDER
+##ellipse.action = Marker.add
+#ellipse.scale.x = 2
+#ellipse.scale.y = 2
+#ellipse.scale.z = 1
+#ellipse.color.a = 1.0
+#ellipse.color.r = 1.0
+#ellipse.color.g = 1.0
+#ellipse.color.b = 1.0
 
-
+(trans,rot)=listener.lookupTransform('fingertip_base_link','left_fingertip_sensor_s8',rospy.Time(0))
+print trans
 
 rospy.spin()
     

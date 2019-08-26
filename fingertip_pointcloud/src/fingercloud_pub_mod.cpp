@@ -22,9 +22,9 @@
 #include <tf/transform_listener.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
-#include <fingertip_msg/adns.h>
+//#include <fingertip_msg/adns.h>
 #include <sensor_msgs/PointCloud2.h>
-#include <fingertip_msg/adns.h>
+//#include <fingertip_msg/adns.h>
 #include <geometry_msgs/PointStamped.h>
 
 #include "fingercloud_pub.h"
@@ -34,7 +34,7 @@ boost::mutex m_mutex;
 bool savePoints = false;
 
 
-void transformPoint(point& p, boost::shared_ptr<const fingertip_msg::adns> msg, const tf::TransformListener* listener){
+void transformPoint(point& p, sensor_msgs::Range&  msg, const tf::TransformListener* listener){
 
   geometry_msgs::PointStamped fingertiplaser_point;
   fingertiplaser_point.header.frame_id = msg->header.frame_id;
@@ -65,32 +65,15 @@ void transformPoint(point& p, boost::shared_ptr<const fingertip_msg::adns> msg, 
   }
 }
 
+//void fingertip_callback(const boost::shared_ptr<const sensor_msgs::Range> msg, const tf::TransformListener* listener,const int sens_no)
 
-void adnsCallback(const boost::shared_ptr<const sensor_msgs::Range> msg, const tf::TransformListener* listener)
+void fingertip_callback(const  sensor_msgs::Range&  msg, const tf::TransformListener* listener,const int sens_no)
 {
-    if (msg->Range != 0 && savePoints) {
+	if (msg.Range != 0 && savePoints) {
     	boost::mutex::scoped_lock l(m_mutex);
 		//ROS_INFO("Sensor Id: %d\tDist: %d\n", msg->sensor_id, msg->dist_mm);
 		point p;
-		p.x = (float)msg->Range; //can be set to 100 to see bigger change
-		p.y = 0.0;
-		p.z = 0.0;
-		transformPoint(p, msg, listener);
-		if (msg->sensor_id < MAX_FINGER_LASER)  //msg->sensor_id is uint8, so it must be positive
-		{
-			pointVector[msg->sensor_id].push_back(p);
-		}
-	}
-}
-
-
-void fingertip_callback(const boost::shared_ptr<const fingertip_msg::adns> msg, const tf::TransformListener* listener,int sens_no)
-{
-    if (msg->dist_mm != 0 && savePoints) {
-    	boost::mutex::scoped_lock l(m_mutex);
-		//ROS_INFO("Sensor Id: %d\tDist: %d\n", msg->sensor_id, msg->dist_mm);
-		point p;
-		p.x = (float)msg->dist_mm/1000; //can be set to 100 to see bigger change
+		p.x = (float)msg.Range; //can be set to 100 to see bigger change
 		p.y = 0.0;
 		p.z = 0.0;
 		transformPoint(p, msg, listener);
@@ -136,9 +119,9 @@ int main(int argc, char** argv){
 	
 	tf::TransformListener listener(ros::Duration(10.0));
 	
-	ros::Subscriber sub = node.subscribe<fingertip_msg::adns>("fingertip/adns", 1000, boost::bind(adnsCallback, _1, &listener));
-	ros::Subscriber sub = node.subscribe<sensor_msgs::Range>("/finger0/s0", 1000, boost::bind(fingertip_callback, _1, &listener),0);
-	ros::Subscriber sub = node.subscribe<sensor_msgs::Range>("/finger0/s1", 1000, boost::bind(fingertip_callback, _1, &listener),1);
+//	ros::Subscriber sub = node.subscribe<fingertip_msg::adns>("fingertip/adns", 1000, boost::bind(adnsCallback, _1, &listener));
+	ros::Subscriber sub0 = node.subscribe<sensor_msgs::Range>("/finger0/s0", 1000, boost::bind(fingertip_callback, _1, &listener));
+//	ros::Subscriber sub1 = node.subscribe<sensor_msgs::Range>("/finger0/s1", 1000, boost::bind(fingertip_callback, _1, &listener, 1));
 	
 	ros::Subscriber sub_command = node.subscribe<std_msgs::String>("fingertip/command", 5, commandCallback);
 	

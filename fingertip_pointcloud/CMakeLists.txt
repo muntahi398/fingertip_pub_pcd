@@ -25,7 +25,7 @@ include_directories(
 add_executable(ellipse src/ellipse.cpp)
 target_link_libraries(ellipse ${catkin_LIBRARIES})
 
-add_executable(fingercloudpub src/fingercloud_pub.cpp src/pointcloud.cpp)
+add_executable(fingercloudpub src/fingercloud_pub_mod.cpp src/pointcloud.cpp)
 target_link_libraries(fingercloudpub ${catkin_LIBRARIES})
 
 #add_library(fingercloudpub src/fingercloud_pub.cpp src/pointcloud.cpp)
