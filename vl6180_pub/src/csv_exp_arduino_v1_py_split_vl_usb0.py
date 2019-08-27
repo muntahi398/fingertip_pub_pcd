@@ -22,8 +22,8 @@ serial_port = '/dev/ttyUSB0'
 IMU_FRAME = '/imu'
 
 rospy.init_node('vl_sensor_0')
-imu_pub = rospy.Publisher('imu/data', Imu, queue_size=10)
-s0 = rospy.Publisher('range', Range, queue_size=10)
+#imu_pub = rospy.Publisher('imu/data', Imu, queue_size=10)
+#s0 = rospy.Publisher('range', Range, queue_size=10)
 pub_range0=rospy.Publisher( "/finger0/s0", Range, queue_size=10);
 pub_range1=rospy.Publisher( "/finger0/s1", Range, queue_size=10);
 pub_range2=rospy.Publisher( "/finger0/s2", Range, queue_size=10);
@@ -74,7 +74,9 @@ with open("datafile2.csv", "w+") as new_file:
         
  #       for k in xrange(len(DATASPLIT)-1):
  #            print(float((DATASPLIT [k])), " ! ")
- 
+
+        if ((float(DATASPLIT [1]) >= 250) or (float(DATASPLIT [1]) <= 3)):
+           continue
         r.range = float(DATASPLIT [1])/1000  ## convert to mm
 
         if ((DATASPLIT [0])=="s0"):

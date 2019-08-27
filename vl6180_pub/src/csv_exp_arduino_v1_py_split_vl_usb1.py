@@ -22,8 +22,8 @@ serial_port = '/dev/ttyUSB1'
 IMU_FRAME = '/imu'
 
 rospy.init_node('vl_sensor_1')
-imu_pub = rospy.Publisher('imu/data', Imu, queue_size=10)
-s0 = rospy.Publisher('range', Range, queue_size=10)
+#imu_pub = rospy.Publisher('imu/data', Imu, queue_size=10)
+#s0 = rospy.Publisher('range', Range, queue_size=10)
 pub_range0=rospy.Publisher( "/finger1/s0", Range, queue_size=10);
 pub_range1=rospy.Publisher( "/finger1/s1", Range, queue_size=10);
 pub_range2=rospy.Publisher( "/finger1/s2", Range, queue_size=10);
@@ -74,29 +74,40 @@ with open("datafile3.csv", "w+") as new_file:
         
  #       for k in xrange(len(DATASPLIT)-1):
  #            print(float((DATASPLIT [k])), " ! ")
- 
+        if ((float(DATASPLIT [1]) >= 250) or (float(DATASPLIT [1]) <= 3)):
+           continue 
         r.range = float(DATASPLIT [1])/1000  ## convert to mm
 
         if ((DATASPLIT [0])=="s0"):
             pub_range0.publish(r)
+            r.header.frame_id = "right_fingertip_sensor_s0"
         elif ((DATASPLIT [0])=='s1'):
             pub_range1.publish(r)
+            r.header.frame_id = "right_fingertip_sensor_s1"
         elif ((DATASPLIT [0])=='s2'):
             pub_range2.publish(r)
+            r.header.frame_id = "right_fingertip_sensor_s2"
         elif ((DATASPLIT [0])=='s3'):
-            pub_range3.publish(r)            
+            pub_range3.publish(r)
+            r.header.frame_id = "right_fingertip_sensor_s3"            
         elif ((DATASPLIT [0])=='s4'):
-            pub_range4.publish(r)            
+            pub_range4.publish(r)
+            r.header.frame_id = "right_fingertip_sensor_s4"            
         elif ((DATASPLIT [0])=='s5'):
             pub_range5.publish(r)            
+            r.header.frame_id = "right_fingertip_sensor_s5"
         elif ((DATASPLIT [0])=='s6'):
             pub_range6.publish(r)            
+            r.header.frame_id = "right_fingertip_sensor_s6"
         elif ((DATASPLIT [0])=='s7'):
             pub_range7.publish(r)            
+            r.header.frame_id = "right_fingertip_sensor_s7"
         elif ((DATASPLIT [0])=='s8'):
             pub_range8.publish(r)            
+            r.header.frame_id = "right_fingertip_sensor_s8"
         elif ((DATASPLIT [0])=='s9'):
             pub_range9.publish(r)            
+            r.header.frame_id = "right_fingertip_sensor_s9"
 #        imu_msg.linear_acceleration.x = float(DATASPLIT [0])
 #        imu_msg.linear_acceleration.y = float(DATASPLIT [1])
 #        imu_msg.linear_acceleration.z = float(DATASPLIT [2])

@@ -27,8 +27,13 @@
     
   
       <node pkg="iai_fingertip_description" name="circular_path_broadcaster" type="circular_path_broadcaster.py"  />
+
+    <node pkg="vl6180_pub" name="bno085_sensor" type="bno_exp_arduino_ros_pub.py"  />
     <node pkg="vl6180_pub" name="vl_sensor" type="csv_exp_arduino_v1_py_split_vl_usb0.py"  />
     <node pkg="vl6180_pub" name="vl_sensor1" type="csv_exp_arduino_v1_py_split_vl_usb1.py"  />
     <node pkg="iai_fingertip_description" name="range_sensor_subscribe" type="left_fingertip_sens_subscribe.py"  />
+    
+
+        <node pkg="fingertip_mapping" name="fingercloudpub" type="fingercloudpub"  />
     
 </launch> 
