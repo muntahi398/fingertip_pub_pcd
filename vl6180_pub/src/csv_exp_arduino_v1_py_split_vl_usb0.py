@@ -78,24 +78,34 @@ with open("datafile2.csv", "w+") as new_file:
         r.range = float(DATASPLIT [1])/1000  ## convert to mm
 
         if ((DATASPLIT [0])=="s0"):
+            r.header.frame_id = "left_fingertip_sensor_s0"
             pub_range0.publish(r)
         elif ((DATASPLIT [0])=='s1'):
+            r.header.frame_id = "left_fingertip_sensor_s1"
             pub_range1.publish(r)
         elif ((DATASPLIT [0])=='s2'):
+            r.header.frame_id = "left_fingertip_sensor_s2"
             pub_range2.publish(r)
         elif ((DATASPLIT [0])=='s3'):
+            r.header.frame_id = "left_fingertip_sensor_s3"
             pub_range3.publish(r)            
         elif ((DATASPLIT [0])=='s4'):
+            r.header.frame_id = "left_fingertip_sensor_s4"
             pub_range4.publish(r)            
         elif ((DATASPLIT [0])=='s5'):
+            r.header.frame_id = "left_fingertip_sensor_s5"
             pub_range5.publish(r)            
         elif ((DATASPLIT [0])=='s6'):
+            r.header.frame_id = "left_fingertip_sensor_s6"
             pub_range6.publish(r)            
         elif ((DATASPLIT [0])=='s7'):
+            r.header.frame_id = "left_fingertip_sensor_s7"
             pub_range7.publish(r)            
         elif ((DATASPLIT [0])=='s8'):
+            r.header.frame_id = "left_fingertip_sensor_s8"
             pub_range8.publish(r)            
         elif ((DATASPLIT [0])=='s9'):
+            r.header.frame_id = "left_fingertip_sensor_s9"
             pub_range9.publish(r)            
 #        imu_msg.linear_acceleration.x = float(DATASPLIT [0])
 #        imu_msg.linear_acceleration.y = float(DATASPLIT [1])

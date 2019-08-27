@@ -361,7 +361,7 @@ def base_move(p_x,p_y):
 #                      "pbase_link",
 #                      "base_link")         
                       
-callback_finger_sens = lambda x: callback(x,dict_1,dict_2)
+#callback_finger_sens = lambda x: callback(x,dict_1,dict_2)
                                           
 
 rospy.init_node('range_sensor_subscribe')
@@ -371,22 +371,22 @@ br = tf.TransformBroadcaster()
 
 
 #plot surface
-X,Y = np.meshgrid(np.arange(-0.10, 0.10, 0.01), np.arange(-0.10, 0.10, 0.1))
-XX = X.flatten()
-YY = Y.flatten()
-order = 2    # 1: linear, 2: quadratic
-fig = plt.figure()
+#X,Y = np.meshgrid(np.arange(-0.10, 0.10, 0.01), np.arange(-0.10, 0.10, 0.1))
+#XX = X.flatten()
+#YY = Y.flatten()
+#order = 2    # 1: linear, 2: quadratic
+#fig = plt.figure()
 #plt.show()
 #ax = fig.gca(projection='3d')
-ax = fig.add_subplot(111, projection='3d')
+#ax = fig.add_subplot(111, projection='3d')
 
 
 
 
 #ax.plot_surface(100, 100,100,rstride=1, cstride=1, alpha=0.2)
 
-sens_measurement  = rospy.Subscriber("/range_val_array", Float32MultiArray, fingertip_callback)
-f0_s0_measurement  = rospy.Subscriber("/finger0/s0", Range, f0_s0_callback,)
+#sens_measurement  = rospy.Subscriber("/range_val_array", Float32MultiArray, fingertip_callback)
+f0_s0_measurement  = rospy.Subscriber("/finger0/s0", Range, f0_s0_callback)
 f0_s1_measurement  = rospy.Subscriber("/finger0/s1", Range, f0_s1_callback)
 f0_s2_measurement  = rospy.Subscriber("/finger0/s2", Range, f0_s2_callback)
 f0_s3_measurement  = rospy.Subscriber("/finger0/s3", Range, f0_s3_callback)
@@ -427,8 +427,8 @@ if p_x>1:
 #ellipse.color.g = 1.0
 #ellipse.color.b = 1.0
 
-(trans,rot)=listener.lookupTransform('fingertip_base_link','left_fingertip_sensor_s8',rospy.Time(0))
-print trans
+#(trans,rot)=listener.lookupTransform('fingertip_base_link','left_fingertip_sensor_s8',rospy.Time(0))
+#print trans
 
 rospy.spin()
     

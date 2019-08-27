@@ -7,10 +7,11 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1
-        - /RobotModel1/Status1
         - /TF1
         - /TF1/Frames1
         - /TF1/Tree1
+        - /PointCloud21
+        - /PointCloud22
       Splitter Ratio: 0.5
     Tree Height: 435
   - Class: rviz/Selection
@@ -31,7 +32,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: PointCloud2
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -221,6 +222,26 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        f0_s0_meas:
+          Value: true
+        f0_s1_meas:
+          Value: true
+        f0_s2_meas:
+          Value: true
+        f0_s3_meas:
+          Value: true
+        f0_s4_meas:
+          Value: true
+        f0_s5_meas:
+          Value: true
+        f0_s6_meas:
+          Value: true
+        f0_s7_meas:
+          Value: true
+        f0_s8_meas:
+          Value: true
+        f0_s9_meas:
+          Value: true
         fingertip_base_link:
           Value: true
         left_fingertip_normal:
@@ -250,8 +271,6 @@ Visualization Manager:
         leftadapter_fingertip_base_frame_out:
           Value: true
         leftfingertip_frame_in:
-          Value: true
-        map:
           Value: true
         pbase_link:
           Value: true
@@ -291,64 +310,132 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          world:
-            {}
-        pbase_link:
-          fingertip_base_link:
-            leftadapter_fingertip_base_frame_in:
-              left_fingertip_normal:
-                {}
-              leftadapter_fingertip_base_frame_out:
-                {}
-              leftfingertip_frame_in:
-                left_fingertip_sensor_s0:
+        world:
+          pbase_link:
+            fingertip_base_link:
+              leftadapter_fingertip_base_frame_in:
+                left_fingertip_normal:
                   {}
-                left_fingertip_sensor_s1:
+                leftadapter_fingertip_base_frame_out:
                   {}
-                left_fingertip_sensor_s2:
+                leftfingertip_frame_in:
+                  left_fingertip_sensor_s0:
+                    f0_s0_meas:
+                      {}
+                  left_fingertip_sensor_s1:
+                    f0_s1_meas:
+                      {}
+                  left_fingertip_sensor_s2:
+                    f0_s2_meas:
+                      {}
+                  left_fingertip_sensor_s3:
+                    f0_s3_meas:
+                      {}
+                  left_fingertip_sensor_s4:
+                    f0_s4_meas:
+                      {}
+                  left_fingertip_sensor_s5:
+                    f0_s5_meas:
+                      {}
+                  left_fingertip_sensor_s6:
+                    f0_s6_meas:
+                      {}
+                  left_fingertip_sensor_s7:
+                    f0_s7_meas:
+                      {}
+                  left_fingertip_sensor_s8:
+                    f0_s8_meas:
+                      {}
+                  left_fingertip_sensor_s9:
+                    f0_s9_meas:
+                      {}
+              rightadapter_fingertip_base_frame_in:
+                right_fingertip_normal:
                   {}
-                left_fingertip_sensor_s3:
+                rightadapter_fingertip_base_frame_out:
                   {}
-                left_fingertip_sensor_s4:
-                  {}
-                left_fingertip_sensor_s5:
-                  {}
-                left_fingertip_sensor_s6:
-                  {}
-                left_fingertip_sensor_s7:
-                  {}
-                left_fingertip_sensor_s8:
-                  {}
-                left_fingertip_sensor_s9:
-                  {}
-            rightadapter_fingertip_base_frame_in:
-              right_fingertip_normal:
-                {}
-              rightadapter_fingertip_base_frame_out:
-                {}
-              rightfingertip_frame_in:
-                right_fingertip_sensor_s0:
-                  {}
-                right_fingertip_sensor_s1:
-                  {}
-                right_fingertip_sensor_s2:
-                  {}
-                right_fingertip_sensor_s3:
-                  {}
-                right_fingertip_sensor_s4:
-                  {}
-                right_fingertip_sensor_s5:
-                  {}
-                right_fingertip_sensor_s6:
-                  {}
-                right_fingertip_sensor_s7:
-                  {}
-                right_fingertip_sensor_s8:
-                  {}
-                right_fingertip_sensor_s9:
-                  {}
+                rightfingertip_frame_in:
+                  right_fingertip_sensor_s0:
+                    {}
+                  right_fingertip_sensor_s1:
+                    {}
+                  right_fingertip_sensor_s2:
+                    {}
+                  right_fingertip_sensor_s3:
+                    {}
+                  right_fingertip_sensor_s4:
+                    {}
+                  right_fingertip_sensor_s5:
+                    {}
+                  right_fingertip_sensor_s6:
+                    {}
+                  right_fingertip_sensor_s7:
+                    {}
+                  right_fingertip_sensor_s8:
+                    {}
+                  right_fingertip_sensor_s9:
+                    {}
       Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Flat Squares
+      Topic: /fingertip_pointcloud_0
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Flat Squares
+      Topic: /fingertip_pointcloud_1
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
       Value: true
   Enabled: true
   Global Options:
@@ -375,33 +462,33 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.38244534
+      Distance: 6.26323414
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.181704968
+        Y: 0.0721713826
+        Z: 0.211871654
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.989796638
+      Pitch: 1.10979617
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.7835865
+      Yaw: 4.02860785
     Saved: ~
 Window Geometry:
   Displays:
-    collapsed: false
+    collapsed: true
   Height: 716
-  Hide Left Dock: false
+  Hide Left Dock: true
   Hide Right Dock: true
-  QMainWindow State: 000000ff00000000fd0000000400000000000002da00000242fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000242000000d700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f00000242fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002800000242000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004b00000003efc0100000002fb0000000800540069006d00650100000000000004b00000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000001d00000024200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000002da00000242fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073000000002800000242000000d700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f00000242fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002800000242000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004b00000003efc0100000002fb0000000800540069006d00650100000000000004b00000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000004b00000024200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:

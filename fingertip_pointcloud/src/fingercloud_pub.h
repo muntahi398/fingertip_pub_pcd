@@ -1,4 +1,4 @@
-const int MAX_FINGER_LASER = 4;
+const int MAX_FINGER_LASER = 20;
 
 struct point {
     float x;

@@ -24,6 +24,8 @@
 #include <pcl/point_types.h>
 //#include <fingertip_msg/adns.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <sensor_msgs/Range.h>
+
 //#include <fingertip_msg/adns.h>
 #include <geometry_msgs/PointStamped.h>
 
@@ -34,7 +36,8 @@ boost::mutex m_mutex;
 bool savePoints = false;
 
 
-void transformPoint(point& p, sensor_msgs::Range&  msg, const tf::TransformListener* listener){
+//void transformPoint(point& p, sensor_msgs::Range&  msg, const tf::TransformListener* listener){
+    void transformPoint(point& p, boost::shared_ptr<const sensor_msgs::Range> msg, const tf::TransformListener* listener){
 
   geometry_msgs::PointStamped fingertiplaser_point;
   fingertiplaser_point.header.frame_id = msg->header.frame_id;
@@ -49,8 +52,8 @@ void transformPoint(point& p, sensor_msgs::Range&  msg, const tf::TransformListe
 
   try{
     geometry_msgs::PointStamped base_point;
-    listener->waitForTransform("/map", msg->header.frame_id, msg->header.stamp, ros::Duration(0.2));
-    listener->transformPoint("/map", fingertiplaser_point, base_point);
+    listener->waitForTransform("/world", msg->header.frame_id, msg->header.stamp, ros::Duration(0.2));
+    listener->transformPoint("/world", fingertiplaser_point, base_point);
 
 	p.x = base_point.point.x;
 	p.y = base_point.point.y;
@@ -65,15 +68,22 @@ void transformPoint(point& p, sensor_msgs::Range&  msg, const tf::TransformListe
   }
 }
 
-//void fingertip_callback(const boost::shared_ptr<const sensor_msgs::Range> msg, const tf::TransformListener* listener,const int sens_no)
+void fingertip_callback(const boost::shared_ptr<const sensor_msgs::Range> msg, const tf::TransformListener* listener)
 
-void fingertip_callback(const  sensor_msgs::Range&  msg, const tf::TransformListener* listener,const int sens_no)
+//void fingertip_callback(const  sensor_msgs::Range&  msg, const tf::TransformListener* listener,const int sens_no)
 {
-	if (msg.Range != 0 && savePoints) {
+	int sens_no=1;
+	if (msg->header.frame_id =="left_fingertip_sensor_s0")
+		sens_no=0;
+	else if (msg->header.frame_id =="left_fingertip_sensor_s1")
+		sens_no=1;
+	else if (msg->header.frame_id =="left_fingertip_sensor_s2")
+		sens_no=2;
+	if (msg->range != 0 && savePoints) {
     	boost::mutex::scoped_lock l(m_mutex);
 		//ROS_INFO("Sensor Id: %d\tDist: %d\n", msg->sensor_id, msg->dist_mm);
 		point p;
-		p.x = (float)msg.Range; //can be set to 100 to see bigger change
+		p.x = (float)msg->range; //can be set to 100 to see bigger change
 		p.y = 0.0;
 		p.z = 0.0;
 		transformPoint(p, msg, listener);
@@ -83,6 +93,13 @@ void fingertip_callback(const  sensor_msgs::Range&  msg, const tf::TransformList
 		}
 	}
 }
+
+//int sensor_frame_to_no()
+//{
+//	fingertiplaser_point.header.frame_id = msg->header.frame_id;
+//
+//}
+
 
 //rostopic pub -1 /fingertip/command std_msgs/String reset
 //rostopic pub -1 /fingertip/command std_msgs/String stop
@@ -121,8 +138,12 @@ int main(int argc, char** argv){
 	
 //	ros::Subscriber sub = node.subscribe<fingertip_msg::adns>("fingertip/adns", 1000, boost::bind(adnsCallback, _1, &listener));
 	ros::Subscriber sub0 = node.subscribe<sensor_msgs::Range>("/finger0/s0", 1000, boost::bind(fingertip_callback, _1, &listener));
-//	ros::Subscriber sub1 = node.subscribe<sensor_msgs::Range>("/finger0/s1", 1000, boost::bind(fingertip_callback, _1, &listener, 1));
-	
+	ros::Subscriber sub1 = node.subscribe<sensor_msgs::Range>("/finger0/s1", 1000, boost::bind(fingertip_callback, _1, &listener));
+	ros::Subscriber sub2 = node.subscribe<sensor_msgs::Range>("/finger0/s2", 1000, boost::bind(fingertip_callback, _1, &listener));
+	ros::Subscriber sub3 = node.subscribe<sensor_msgs::Range>("/finger0/s3", 1000, boost::bind(fingertip_callback, _1, &listener));
+	ros::Subscriber sub4 = node.subscribe<sensor_msgs::Range>("/finger0/s4", 1000, boost::bind(fingertip_callback, _1, &listener));
+	ros::Subscriber sub5 = node.subscribe<sensor_msgs::Range>("/finger0/s5", 1000, boost::bind(fingertip_callback, _1, &listener));
+
 	ros::Subscriber sub_command = node.subscribe<std_msgs::String>("fingertip/command", 5, commandCallback);
 	
 	ros::Publisher pub_pointcloud[MAX_FINGER_LASER];

@@ -24,14 +24,14 @@ class DynamicTFBroadcaster:
         change = 0.0
         while not rospy.is_shutdown():
             # Run this loop at about 10Hz
-            rospy.sleep(0.01)
+            rospy.sleep(0.1)
 
             t = geometry_msgs.msg.TransformStamped()
             t.header.frame_id = "world" 
             t.header.stamp = rospy.Time.now()
             t.child_frame_id = "pbase_link"
-            t.transform.translation.x = 2.0 * math.sin(change)
-            t.transform.translation.y = 2.0 * math.cos(change)
+            t.transform.translation.x = 0.50 * math.sin(change)
+            t.transform.translation.y = 0.50 * math.cos(change)
             t.transform.translation.z = 0.0
 
             t.transform.rotation.x = 0.0
@@ -42,9 +42,9 @@ class DynamicTFBroadcaster:
             tfm = tf.msg.tfMessage([t])
             self.pub_tf.publish(tfm)
 
-            change += 0.01
+            change += 0.05
 
 if __name__ == '__main__':
-    rospy.init_node('my_tf_broadcaster')
+    rospy.init_node('circular_path_broadcaster')
     tfb = DynamicTFBroadcaster()
     rospy.spin()
