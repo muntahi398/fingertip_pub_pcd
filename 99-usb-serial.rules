@@ -1,0 +1,5 @@
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{serial}=="608b3c881347e911897522d4ee8b14a7", SYMLINK+="tty_finger_right"
+
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{serial}=="aacfadbf1347e911b3e71dd4ee8b14a7", SYMLINK+="tty_finger_left"
+
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{serial}=="5c690e3fc43ee811851300a57a7060d0", SYMLINK+="tty_finger_bno"

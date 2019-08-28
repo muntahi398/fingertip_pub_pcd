@@ -18,7 +18,7 @@ from sensor_msgs.msg import Range
 
 
 # Open com port
-serial_port = '/dev/ttyUSB0'
+serial_port = '/dev/tty_finger_left'
 IMU_FRAME = '/imu'
 
 rospy.init_node('vl_sensor_0')

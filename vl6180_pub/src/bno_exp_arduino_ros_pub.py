@@ -17,8 +17,8 @@ from sensor_msgs.msg import  Imu
 
 
 # Open com port
-serial_port = '/dev/ttyUSB0'
-IMU_FRAME = '/imu'
+serial_port = '/dev/tty_finger_bno'
+IMU_FRAME = '/leftfingertip_imu'
 
 rospy.init_node('bno085_sensor')
 imu_pub = rospy.Publisher('imu/data', Imu)
