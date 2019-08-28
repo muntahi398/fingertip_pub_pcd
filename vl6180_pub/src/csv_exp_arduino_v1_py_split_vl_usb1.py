@@ -34,6 +34,11 @@ pub_range6=rospy.Publisher( "/finger1/s6", Range, queue_size=10);
 pub_range7=rospy.Publisher( "/finger1/s7", Range, queue_size=10);
 pub_range8=rospy.Publisher( "/finger1/s8", Range, queue_size=10);
 pub_range9=rospy.Publisher( "/finger1/s9", Range, queue_size=10);
+
+front_min=rospy.Publisher( "/finger1/front_min", Range, queue_size=10);
+back_min=rospy.Publisher( "/finger1/back_min", Range, queue_size=10);
+vert_min=rospy.Publisher( "/finger1/vert_min", Range, queue_size=10);
+
 r = Range()
 
 r.header.frame_id = "/vl_sensor"
@@ -46,7 +51,7 @@ r.max_range = 20#max_range
 #imu_msg = Imu()
 #imu_msg.header.frame_id = IMU_FRAME
 
-array=[]
+array=[0] * 10
 DATASPLIT={}
 count = 1
 #print("port")
@@ -108,9 +113,31 @@ with open("datafile3.csv", "w+") as new_file:
         elif ((DATASPLIT [0])=='s9'):
             pub_range9.publish(r)            
             r.header.frame_id = "right_fingertip_sensor_s9"
-#        imu_msg.linear_acceleration.x = float(DATASPLIT [0])
-#        imu_msg.linear_acceleration.y = float(DATASPLIT [1])
-#        imu_msg.linear_acceleration.z = float(DATASPLIT [2])
+
+
+        front_sens=array[0:5]
+        back_sens=array[6:7]
+        vert_sens=array[8:9]
+        
+#        index_min = min(range(len(front_sens)), key=front_sens.__getitem__)
+        
+        if(min(front_sens) ==r.range):
+            front_min.publish(r) 
+        if((array[6]<array[7])& (array[6] ==r.range)):
+            r.header.frame_id = "right_fingertip_sensor_s6"
+            back_min.publish(r) 
+        elif((array[6]>array[7])& (array[7] ==r.range)):
+            r.header.frame_id = "right_fingertip_sensor_s7"
+            back_min.publish(r) 
+#        else:
+#            r.range=0.24
+#            back_min.publish(r)
+        if((array[8]<array[9]) & (array[8] ==r.range)):
+            r.header.frame_id = "right_fingertip_sensor_s8"
+            vert_min.publish(r) 
+        elif((array[8]>array[9]) & (array[9] ==r.range)):
+            r.header.frame_id = "right_fingertip_sensor_s9"
+            vert_min.publish(r)
         
 
 #        IMU_FRAME = rospy.get_param('~imu_frame', 'imu_link')

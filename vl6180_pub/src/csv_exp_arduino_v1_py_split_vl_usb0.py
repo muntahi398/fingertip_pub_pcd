@@ -34,6 +34,12 @@ pub_range6=rospy.Publisher( "/finger0/s6", Range, queue_size=10);
 pub_range7=rospy.Publisher( "/finger0/s7", Range, queue_size=10);
 pub_range8=rospy.Publisher( "/finger0/s8", Range, queue_size=10);
 pub_range9=rospy.Publisher( "/finger0/s9", Range, queue_size=10);
+
+front_min=rospy.Publisher( "/finger0/front_min", Range, queue_size=10);
+back_min=rospy.Publisher( "/finger0/back_min", Range, queue_size=10);
+vert_min=rospy.Publisher( "/finger0/vert_min", Range, queue_size=10);
+
+
 r = Range()
 
 r.header.frame_id = "/vl_sensor"
@@ -46,7 +52,7 @@ r.max_range = 20#max_range
 #imu_msg = Imu()
 #imu_msg.header.frame_id = IMU_FRAME
 
-array=[]
+array=[0] * 10
 DATASPLIT={}
 count = 1
 #print("port")
@@ -82,38 +88,72 @@ with open("datafile2.csv", "w+") as new_file:
         if ((DATASPLIT [0])=="s0"):
             r.header.frame_id = "left_fingertip_sensor_s0"
             pub_range0.publish(r)
+            array[0]=r.range
         elif ((DATASPLIT [0])=='s1'):
             r.header.frame_id = "left_fingertip_sensor_s1"
             pub_range1.publish(r)
+            array[1]=r.range
         elif ((DATASPLIT [0])=='s2'):
             r.header.frame_id = "left_fingertip_sensor_s2"
             pub_range2.publish(r)
+            array[2]=r.range
         elif ((DATASPLIT [0])=='s3'):
             r.header.frame_id = "left_fingertip_sensor_s3"
             pub_range3.publish(r)            
+            array[3]=r.range
         elif ((DATASPLIT [0])=='s4'):
             r.header.frame_id = "left_fingertip_sensor_s4"
             pub_range4.publish(r)            
+            array[4]=r.range
         elif ((DATASPLIT [0])=='s5'):
             r.header.frame_id = "left_fingertip_sensor_s5"
             pub_range5.publish(r)            
+            array[5]=r.range
         elif ((DATASPLIT [0])=='s6'):
             r.header.frame_id = "left_fingertip_sensor_s6"
             pub_range6.publish(r)            
+            array[6]=r.range
         elif ((DATASPLIT [0])=='s7'):
             r.header.frame_id = "left_fingertip_sensor_s7"
             pub_range7.publish(r)            
+            array[7]=r.range
         elif ((DATASPLIT [0])=='s8'):
             r.header.frame_id = "left_fingertip_sensor_s8"
             pub_range8.publish(r)            
+            array[8]=r.range
         elif ((DATASPLIT [0])=='s9'):
             r.header.frame_id = "left_fingertip_sensor_s9"
             pub_range9.publish(r)            
+            array[9]=r.range
 #        imu_msg.linear_acceleration.x = float(DATASPLIT [0])
 #        imu_msg.linear_acceleration.y = float(DATASPLIT [1])
 #        imu_msg.linear_acceleration.z = float(DATASPLIT [2])
+        front_sens=array[0:5]
+        back_sens=array[6:7]
+        vert_sens=array[8:9]
         
-
+        index_min = min(range(len(front_sens)), key=front_sens.__getitem__)
+        
+        if(min(front_sens) ==r.range):
+            front_min.publish(r) 
+        if((array[6]<array[7])& (array[6] ==r.range)):
+            r.header.frame_id = "left_fingertip_sensor_s6"
+            back_min.publish(r) 
+        elif((array[6]>array[7])& (array[7] ==r.range)):
+            r.header.frame_id = "left_fingertip_sensor_s7"
+            back_min.publish(r) 
+#        else:
+#            r.range=0.24
+#            back_min.publish(r)
+        if((array[8]<array[9]) & (array[8] ==r.range)):
+            r.header.frame_id = "left_fingertip_sensor_s8"
+            vert_min.publish(r) 
+        elif((array[8]>array[9]) & (array[9] ==r.range)):
+            r.header.frame_id = "left_fingertip_sensor_s9"
+            vert_min.publish(r)
+#        else:
+#            r.range=0.24
+#            back_min.publish(r)
 #        IMU_FRAME = rospy.get_param('~imu_frame', 'imu_link')
 
 #        imu_msg.header.stamp = rospy.Time.now()
